@@ -1,4 +1,10 @@
-#TO BE RUN IN A NOTEBOOK WITH SPLITPEAKLETS
+import straxen
+import strax
+import cutax
+import numpy as np
+from SplitPeaklets import SplitPeaklets
+st = straxen.contexts.xenonnt('global_v8', output_folder = '/scratch/midway2/cmcooper')
+st.register(SplitPeaklets)
 
 corresponding_peaks = []
 save_count = 0

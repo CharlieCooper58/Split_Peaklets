@@ -2,7 +2,7 @@ import straxen
 import strax
 import cutax
 import numpy as np
-from SplitPeaklets import SplitPeaklets
+from SplitPeakletsPlugin import SplitPeaklets
 st = straxen.contexts.xenonnt('global_v8', output_folder = '/scratch/midway2/cmcooper')
 st.register(SplitPeaklets)
 

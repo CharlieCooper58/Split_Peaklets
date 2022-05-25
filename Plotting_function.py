@@ -1,7 +1,12 @@
 #REQUIRES RECORDS
+import straxen
+import strax
+import cutax
+import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib
+st = straxen.contexts.xenonnt('global_v8', output_folder = '/scratch/midway2/cmcooper')
 %matplotlib notebook
 
 def get_records(start, end):

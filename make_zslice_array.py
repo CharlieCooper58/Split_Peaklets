@@ -128,7 +128,7 @@ plt.rc("ytick", labelsize = 13)
 histograms = dt_difference_hist_together(events_double_scatter, z_step = 400000)
 
 #*************************************************
-#This is how I currently fit everything.   I don't think it's the best way to do it, so I'm only including it for the top z slice.  If you use this, just change the drift time bins.
+#This is how I currently fit everything.   I don't think it's the best way to do it, so I'm only including it for the top z slice.  If you use this, just change the drift time bins to get data for all slices.
 #You can also play around with the value of approx_index to see how it changes the fit
 #*************************************************
 
@@ -147,6 +147,24 @@ print(exp_guess)
 pftest, pferrtest, chisqtest, doftest = data_fit(exp_guess, expfunc_bg, histograms[0][0][approx_index:], histograms[0][1][approx_index:], histograms[0][2][approx_index:])
 dat.append([pftest, pferrtest, chisqtest, doftest])
 
-
-
+quots = []
+for i in range(len(histograms)):
+    print(i)
+    quots.append(histograms[i][1]/expfunc_bg([dat[i][0][0], dat[i][0][1], dat[i][0][2]], histograms[i][0]))
+quots = np.array(quots)
+fig, ax = plt.subplots(figsize = (10, 10))
+cm = plt.get_cmap('gist_rainbow')
+ax.set_prop_cycle('color', [cm(1.*i/7) for i in range(7)])
+z_step = 400000
+z_lower = 15000
+z_upper = z_lower + z_step
+for i in range(6):
+    plt.plot(histograms[i][0], scipy.signal.savgol_filter(quots[i], 8, 1), label = "[{:.1f} cm, {:.1f} cm]".format(0.0675*z_lower/1000, 0.0675*z_upper/1000))
+    z_lower = z_lower + z_step
+    z_upper = z_lower + z_step
+plt.xlabel("Time Difference (ns)", fontsize = 18)
+plt.ylabel("$\\frac{Data}{Fit}$", fontsize = 22)
+#plt.title("Data Divided by Fit by z Slice for Double Scatter Events", fontsize = 24)
+plt.legend(title = 'Depth', title_fontsize = 14, fontsize = 13)
+plt.show()
 
